@@ -1,2 +1,34 @@
 Take input of binary tree and print recursively
 *************************************************
+void printTree(BinaryTreeNode<int> *root){
+if(root==NULL){
+return;
+}
+cout<<root->data<<':';
+if(root->left){             //also can write (root->left!=NULL)
+cout<<"L"<<root->left->data;
+}
+if(root->right){             
+cout<<"R"<<root->right->data;
+}
+cout<<endl;
+printTree(root->left);
+printTree(root->right);
+}
+###########################################################
+
+Taking input code
+(if -1 entered then that means there's nothing there, return its NULL)
+***********************************************************
+BinaryTreeNode <int>* takeInput(){
+int rootData;
+cin>>rootData;
+if(rootData==-1){
+return;}
+BinaryTreeNode <int>* root= new BinaryTreeNode <int>(rootData);
+BinaryTreeNode <int>* leftChild=takeInput();
+BinaryTreeNode <int>* rightChild=takeInput();
+root->left= leftChild;
+root->right=rightChild;
+return root;
+}
