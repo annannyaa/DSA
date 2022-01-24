@@ -1,0 +1,12 @@
+count the Nodes of BT
+*******************************************
+int countNodes(BinaryTreeNode<int> * root){
+if(root==NULL){   //base case
+return 0;}
+return 1+ countNodes(root->left) + countNodes(root->right);
+}
+###########################################
+
+For a given Binary Tree of type integer and a number X, find whether a node exists in the tree with data X or not.
+******************************************************
+
