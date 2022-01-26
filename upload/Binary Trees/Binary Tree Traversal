@@ -1,0 +1,36 @@
+In-order traversal
+************************************************************
+void Inorder(BinaryTreeNode *root){
+  if(root==NULL){       //base-case
+  return;}
+  Inorder(root->left);
+  cout<<root->left<<" ";
+  Inorder(root->right);
+}
+
+############################################################
+preOrder traversal
+**************************************************************
+void preOrder(BinaryTreeNode<int> *root) {
+	// Write your code here
+    if(root==NULL){
+        return;
+    }
+    cout<<root->data<<" ";
+    preOrder(root->left);
+    preOrder(root->right);
+}
+#############################################################
+
+postOrder traversal
+*************************************************************
+void postOrder(BinaryTreeNode<int> *root) {
+	// Write your code here
+    if(root==NULL){
+        return;
+    }
+    postOrder(root->left);
+    postOrder(root->right);
+    cout<<root->data<<" ";
+}
+#############################################################
