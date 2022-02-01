@@ -5,6 +5,7 @@ pair<int,int> heightDia(BinaryTreeNode *root){
   pair<int,int> p;
   p.first=0;    //height
   p.second=0;   //diameter
+  return p;
   }
   pair<int,int> leftAns= heightDia(root->left);
   pair<int,int> rightAns= heightDia(root->right);
