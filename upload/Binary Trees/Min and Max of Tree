@@ -1,0 +1,34 @@
+For a given a Binary Tree of type integer, find and return the minimum and the maximum data values.
+Return the output as an object of Pair class, which is already created.
+****************************************************************************
+pair<int, int> getMinAndMax(BinaryTreeNode<int> *root) {
+	// Write your code here
+    if(root->left==NULL && root->right==NULL){
+        pair<int,int> p;
+        p.first=root->data;  //min
+        p.second=root->data; //max
+        return p;
+    }
+    pair <int,int> finalans;
+    finalans.first=finalans.second=root->data;
+    if(root->left){
+    pair<int,int> left=getMinAndMax(root->left);
+    finalans.first=min(finalans.first,left.first);
+    finalans.second=max(finalans.second,left.second);
+    }
+    
+    if(root->right){
+    pair<int,int> right=getMinAndMax(root->right);
+    finalans.first=min(finalans.first,right.first);
+    finalans.second=max(finalans.second,right.second);
+    }
+    
+    return finalans;
+}
+*******************************************************************************
+creating your own pair class:
+class PairAns {
+    public :
+    int min;
+    int max;
+};
