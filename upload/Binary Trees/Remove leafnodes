@@ -1,0 +1,24 @@
+Given a binary tree, remove all leaf nodes from it. Leaf nodes are those nodes, which don't have any children.
+Note:
+1. Root will also be a leaf node if it doesn't have left and right child. 
+2. You don't need to print the tree, just remove all leaf nodes and return the updated root.
+******************************************************************************
+BinaryTreeNode<int>* removeLeafNodes(BinaryTreeNode<int> *root) {
+    // Write your code here
+    if(root->left==NULL && root->right==NULL){
+        delete root;
+    	return NULL;
+    }
+    if(root->left){
+        BinaryTreeNode<int>* left=removeLeafNodes(root->left);
+        root->left=left;
+    }
+    if(root->right){
+        BinaryTreeNode<int>* right=removeLeafNodes(root->right);
+        root->right=right;
+    }
+return root;
+    
+   
+    
+}
