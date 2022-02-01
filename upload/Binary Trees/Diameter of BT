@@ -1,0 +1,24 @@
+
+**************************************************
+pair<int,int> heightDia(BinaryTreeNode *root){
+  if(root==NULL){
+  pair<int,int> p;
+  p.first=0;    //height
+  p.second=0;   //diameter
+  }
+  pair<int,int> leftAns= heightDia(root->left);
+  pair<int,int> rightAns= heightDia(root->right);
+  int ld= leftAns.second;
+  int lh= leftAns.first;
+  int rd= rightAns.second;
+  int rh= rightAns.first;
+  int height= max(lh,rh);
+  int diameter=max(lh+rh, max(ld,rd));
+  pair<int,int> p;
+  p.first=height;
+  p.second=diameter;
+  return p;
+  
+}
+
+time complexity: O(n);
