@@ -1,0 +1,60 @@
+check if given binary tree is BST or not
+***********************************************************
+#include<climits>
+int minimum(BinaryTreeNode<int> *root){
+    if(root==NULL){
+        return INT_MAX;
+    }
+    return min(root->data,min(minimum(root->left),minimum(root->right)));
+}
+int maximum(BinaryTreeNode<int> *root){
+    if(root==NULL){
+        return INT_MIN;
+    }
+    return max(root->data,max(maximum(root->left),maximum(root->right)));
+}
+bool isBST(BinaryTreeNode<int> *root) {
+	// Write your code here
+   if(root==NULL){
+       return true;
+   }
+	int leftMax=maximum(root->left);
+    int rightMin=minimum(root->right);
+    bool output= (root->data> leftMax)&& (root->data<=rightMin)&& isBST(root->left)&& isBST(root->right);
+    return output;
+}
+
+Time complexity-O(nlogn)
+rel: T(n)=2 T(n/2) + kn
+if only right side nodes exist: rel: T(n)=T(n-1) + kn  Time complexity=T(n^2)
+Time complexity total: O(n*h)
+#######################################################################
+approach: bottom-top
+class IsBSTReturn(){
+public:
+int maximum;
+int minimum;
+bool isBST;
+}
+IsBSTReturn isBST2(BinaryTreeNode<int> *root){
+  if(root==NULL){
+  IsBSTReturn output;
+  output.maximum=INT_MIN;
+  output.minimum=INT_MAX;
+  output.isBST=true;
+  }
+    IsBSTReturn leftOutput= isBST2(root->left);
+    IsBSTReturn rightOutput= isBST2(root->right);
+    int minimum=min(root->data, min(leftOutput.minimum,rightOutput.minimum));
+    int maximum=max(root->data, max(rightOutput.maximum,rightOutput.maximum));
+    bool isBSTfinal= (root->data> leftOutput.maximum)&& (root->data<=rightOutput.minimum)&& leftOutput.isBST && rightOutput.isBST;
+    IsBSTReturn finaloutput;
+    finaloutput.minimum=minimum;
+    finaloutput.maximum=maximum;
+    finaloutput.isBST=isBSTfinal;
+    return finalOutput;
+}
+
+Timecomplexity : O(n)  rel: T(n)=T(n/2) + k;
+###########################################################################
+approach: top-bottom
