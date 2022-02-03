@@ -57,4 +57,21 @@ IsBSTReturn isBST2(BinaryTreeNode<int> *root){
 
 Timecomplexity : O(n)  rel: T(n)=T(n/2) + k;
 ###########################################################################
-approach: top-bottom
+approach: top-bottom/constraint approach
+
+bool isBST(BinaryTreeNode <int> *root, int min=INT_MIN, int max=INT_MAX){
+	if(root==NULL){
+	return true;}
+	if(root->data <min || root->data > max){
+	return false;}
+	bool isLeft= isBST(root->left, min, root->data -1);
+	bool isRight=isBST(root->right, root->data, max);
+	return isLeft && isRight;
+}
+
+
+
+
+
+
+
