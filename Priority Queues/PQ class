@@ -116,6 +116,10 @@ int main() {
         cin >> choice;
     }
 }
-    
-    
+########################################################
+NOTE:
+removeMin code: ALSO CALLED HEAP SORT
+HEAP SORT: TIME COMP: insert fn (ntimes)+ removeMin fn (ntimes) 
+                       nlogn                nlogn            = which is effectively O(nlogn)
+SPACE COMP: O(n). vector of size n
  
