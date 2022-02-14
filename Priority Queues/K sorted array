@@ -9,7 +9,7 @@ void kSortedArray(int input[], int n, int k) {
 	}
 
 	int j = 0;
-	for(int i = k; i < n; i++) {
+	for(int i = k; i < n; i++) {				//n-k ele sorted
 		input[j] = pq.top();
 		pq.pop();
 		pq.push(input[i]);
@@ -20,7 +20,7 @@ void kSortedArray(int input[], int n, int k) {
 	while(!pq.empty()) {
 		input[j] = pq.top();
 		pq.pop();
-                j++;                //n-k remains unsorted but can be sorted
+                j++;                //k ele remains unsorted but can be sorted
 	}
 
 }
