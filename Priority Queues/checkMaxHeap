@@ -1,0 +1,63 @@
+Given an array of integers, check whether it represents max-heap or not. Return true if the given array represents max-heap, else return false.
+8
+42 20 18 6 14 11 9 4
+Sample Output 1:
+true
+***********************************
+bool isMaxHeap(int arr[], int n) {
+    // Write your code here
+    bool ans=true;
+    
+    
+for(int i=0;i<n;i++){	
+    int parent= i;//some condition related to left child/parent <n
+    int leftChild= 2*parent+1;
+    int rightChild=2*parent+2;
+    if(leftChild<n){
+    if(arr[leftChild]>arr[parent]){
+        ans=false;
+        break;
+    }}
+    if(rightChild<n){
+    if(arr[rightChild]>arr[parent]){
+        ans=false;
+        break;
+    }}
+    
+}
+    return ans;
+}
+
+MAIN CODE:
+#include <iostream>
+using namespace std;
+
+#include "solution.h"
+
+int main() {
+    int n;
+    cin >> n;
+    int *arr = new int[n];
+
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+
+    cout << (isMaxHeap(arr, n) ? "true\n" : "false\n");
+
+    delete[] arr;
+}
+#######################
+bool isMaxHeap(int arr[], int n) {
+for (int i = 0; 2 * i + 1 < n; i++) {
+int leftChildIndex = 2 * i + 1;
+int rightChildIndex = leftChildIndex + 1;
+if (arr[i] < arr[leftChildIndex]) {
+return false;
+}
+if (arr[i] < arr[rightChildIndex]) {
+return false;
+}
+}
+return true;
+}
