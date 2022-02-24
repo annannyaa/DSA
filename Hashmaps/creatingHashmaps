@@ -1,0 +1,138 @@
+#include <string>
+using namespace std;
+
+template <typename V>
+class MapNode {
+	public:
+		string key;
+		V value;
+		MapNode* next;
+
+		MapNode(string key, V value) {
+			this->key = key;
+			this->value = value;
+			next = NULL;
+		}
+
+		~MapNode() {
+			delete next;
+		}
+};
+
+template <typename V>
+class ourmap {
+	MapNode<V>** buckets;
+	int count;
+	int numBuckets;
+
+	public:
+	ourmap() {
+		count = 0;
+		numBuckets = 5;
+		buckets = new MapNode<V>*[numBuckets];
+		for (int i = 0; i < numBuckets; i++) {
+			buckets[i] = NULL;
+		}
+	}
+
+	~ourmap() {
+		for (int i = 0; i < numBuckets; i++) {
+			delete buckets[i];
+		}
+		delete [] buckets;
+	}
+
+	int size() {
+		return count;
+	}
+
+	V getValue(string key) {
+		int bucketIndex = getBucketIndex(string key);    //finding bucker index
+		MapNode<V>* head = buckets[bucketIndex];         //finding the corressponding head of LL of that bucket index
+		while (head != NULL) {
+			if (head->key == key) {
+				return head->value;
+			}
+			head = head->next;
+		}
+		return 0;   // as a default, when key is not found
+	}
+
+	private:
+	int getBucketIndex(string key) {
+		int hashCode = 0;
+
+		int currentCoeff = 1;
+		for (int i = key.length() - 1; i >= 0; i--) {
+			hashCode += key[i] * currentCoeff;     //converting string to base p
+			hashCode = hashCode % numBuckets;  //done so that hashcode doesn't go out of range of int
+			currentCoeff *= 37;
+			currentCoeff = currentCoeff % numBuckets; //done to decrease the number. read in note: modulus can be pushed inside as many times as possible
+		}
+
+		return hashCode % numBuckets;   //compression 
+	}
+
+	public:
+	void insert(string key, V value) {
+		int bucketIndex = getBucketIndex(string key);
+		MapNode<V>* head = buckets[bucketIndex];
+		while (head != NULL) {
+			if (head->key == key) {
+				head->value = value;    //updating a value when key already exists, therefore no count
+				return;
+			}
+			head = head->next;
+		}
+		head = buckets[bucketIndex];
+		MapNode<V>* node = new MapNode<V>(key, value);    //creating new
+		node->next = head;                               //new head of LL
+		buckets[bucketIndex] = node;                    //array will now point to new head
+		count++;                                        //count only here as new node being inserted 
+	}
+  
+  V remove(string key) {
+		int bucketIndex = getBucketIndex(string key);
+		MapNode<V>* head = buckets[bucketIndex];
+		MapNode<V>* prev = NULL;
+		while (head != NULL) {
+			if (head->key == key) {
+				if (prev == NULL) {
+					buckets[bucketIndex] = head->next;   //that means the first ll node is the one to be deleted, then simply point to next one, ALSO: can't access NULL which we do in the else case
+				} else {
+					prev->next = head->next;   // case in which prev is no longer NULL
+				}
+				V value = head->value;   //for returning value
+				head->next = NULL;
+				delete head;   //memory free
+				count--;       //decrease size
+				return value;
+			}
+			prev = head;
+			head = head->next;
+		}
+		return 0;    //key not found
+	}
+
+};
+##########################################################
+
+TIME COMPLEXITY: we were hoping to acheieve O(1).
+n-no of entries in our map
+l=length of word
+insert:  hash computation time: O(l). which is neglibile. because if we enter 10^5 entries in map, O(l) is ignored. therefore, hash computation assumed constant
+now, found bucket index, traverse list. worst case: O(n)- when all the entries in the same bucket. but acc. to research, this doesn't happen. 
+on avg: if we have b boxes and n entries, no of entries in each box= n/b. therefore, distrubiton happens nicely. 
+therefore: O(n) becomes O(n/b). HERE: n/b is LOAD FACTOR. generally, we ensure: n/b < 0.7
+
+because of these, in every bucket there are mac to max 7-8 entries. therefore, we assume every box has constant no of entries and thats how O(1) is achieved
+
+but how do we ensure these? to ensure 0.7 ratio, whenever the no. of entries increase and >0.7 happens, we do rehashing. that is increase bucket size  (maybe double) and then rehash the entries
+on our new bucket array. this may take some time, but it happens only once and time becomes double and this is how we dont let load factor increase.
+
+therefore, time complexity for all is O(1)
+
+
+
+
+
