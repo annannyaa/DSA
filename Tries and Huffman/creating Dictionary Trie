@@ -50,4 +50,19 @@ class Trie {
 	void insertWord(string word) {
 		insertWord(root, word);
 	}
+	
+	bool search(string word) {
+        // Write your code here
+        return searchHelper(root, word); 
+         
+    }
+    bool searchHelper(TrieNode *root,string word){
+        if(root->children[word[0]-'a']==0){
+            return false;
+        }
+        if(word.size()==1){
+            return root->children[word[0]-'a']->isTerminal;
+        }
+        return searchHelper(root->children[word[0]-'a'],word.substr(1));
+    }
 };
