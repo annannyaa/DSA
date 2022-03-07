@@ -1,0 +1,130 @@
+Given 'n' number of words, you need to find if there exist any two words which can be joined to make a palindrome or any word, which itself is a palindrome.
+The function should return either true or false. You don't have to print anything.
+Sample Input 1 :
+4
+abc def ghi cba
+Sample Output 1 :
+true
+Explanation of Sample Input 1:
+"abc" and "cba" forms a palindrome
+Sample Input 2 :
+2
+abc def
+Sample Output 2 :
+false
+Explanation of Sample Input 2:
+Neither their exists a pair which forms a palindrome, nor any of the words is a palindrome in itself. Hence, the output is 'false.'
+****************************
+ // #include "TrieNode.h"
+#include <string>
+#include <vector>
+class TrieNode {
+	public :
+	char data;
+	TrieNode **children;
+	bool isTerminal;
+
+	TrieNode(char data) {
+		this -> data = data;
+		children = new TrieNode*[26];
+		for(int i = 0; i < 26; i++) {
+			children[i] = NULL;
+		}
+		isTerminal = false;
+	}
+};
+
+class Trie {
+	TrieNode *root;
+
+	public :
+	int count;
+
+	Trie() {
+		this->count = 0;
+		root = new TrieNode('\0');
+	}
+
+	bool insertWord(TrieNode *root, string word) {
+		// Base case
+		if(word.size() == 0) {
+			if (!root->isTerminal) {
+				root -> isTerminal = true;
+				return true;	
+			} else {
+				return false;
+			}
+		}
+
+		// Small Calculation
+		int index = word[0] - 'a';
+		TrieNode *child;
+		if(root -> children[index] != NULL) {
+			child = root -> children[index];
+		}
+		else {
+			child = new TrieNode(word[0]);
+			root -> children[index] = child;
+		}
+
+		// Recursive call
+		return insertWord(child, word.substr(1));
+	}
+
+	// For user
+	void insertWord(string word) {
+		if (insertWord(root, word)) {
+			this->count++;
+		}
+	}
+      bool search(TrieNode *root,string word) {
+        // Write your code here
+		if(word.size()==0) return true;
+          
+        if(root->children[word[0]-'a']==NULL)
+            return false;
+
+       
+
+        return search(root->children[word[0]-'a'],word.substr(1)); 
+    }
+    bool search(string word)
+    {  return search(root,word);}
+    
+    
+    void autocomplete(TrieNode *root ,string s)
+    {
+        if(root->isTerminal==true)
+            cout<<s<<endl;
+        
+        for(int i=0 ;i<26 ;i++)
+        { if(root->children[i]!=NULL)
+          { char c= i + 'a';
+            autocomplete(root->children[i],s+c);
+            }
+        } 
+        return;
+    }
+    void autoComplete(vector<string> input, string pattern) {
+       //build a trie
+        for(int i=0 ;i<input.size();i++)
+            insertWord(input[i]);
+        //search in a trie
+        if(search(pattern)==false) return ;
+        
+        
+        string s= pattern;
+        
+        while(pattern.size()!=0)
+        {
+            root=root->children[pattern[0]-'a'];
+            pattern=pattern.substr(1);
+        }
+        
+        autocomplete( root , s);
+    }
+    
+    
+    
+
+};
