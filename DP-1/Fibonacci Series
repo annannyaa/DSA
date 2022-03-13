@@ -1,0 +1,9 @@
+fibonacci using recursion:
+void Fibonacci(int n){
+  if(n<=1){
+  return n;
+  }
+  int a=Fibonacci(n-1);
+  int b=Fibonacci(n-2);
+  return a+b;
+      }
