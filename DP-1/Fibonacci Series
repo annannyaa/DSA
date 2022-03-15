@@ -7,3 +7,4 @@ void Fibonacci(int n){
   int b=Fibonacci(n-2);
   return a+b;
       }
+complexity: O(2^n)
