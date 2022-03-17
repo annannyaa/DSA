@@ -1,0 +1,100 @@
+//BRUTE FORCE
+#include <iostream>
+using namespace std;
+
+int minSteps(int n) {
+	// Base case
+	if(n <= 1) {
+		return 0;
+	}
+
+	// Recursive call
+	int x = minSteps(n - 1);
+
+	int y = INT_MAX, z = INT_MAX; //initializing by INT_MAX (earlier y,z=garbage) because lets say if y,z=0 and x=3 then min would be 0 and ans would be 1. which is                                     wrong, as the only valid value is 3 so ans should be 4
+	if(n % 2 == 0) {
+		y = minSteps(n/2);
+	}
+
+	if(n % 3 == 0) {
+		z = minSteps(n/3);
+	}
+
+	// Calculate final output
+	int ans = min(x, min(y, z)) + 1;
+
+	return ans;
+
+}
+COMPLEXITY: Worst to worst case 3^n but worst case 2^n bcause of overlapping sub problems. unique calls req are n. /(n+1) using 0
+int main() {
+	int n;
+	cin >> n;
+
+	cout << minSteps(n) << endl;
+}
+******************************************
+USING MEMOIZATION: 
+int minStepsHelper(int n, int *ans) {
+	// Base case
+	if(n <= 1) {
+		return 0;
+	}
+
+	// Check if output already exists
+	if(ans[n] != -1) {
+		return ans[n];    //ans[i]=min steps required to reach 1. Therefore ans[n] would be the returned ans.
+	}
+
+	// Calculate output
+	int x = minStepsHelper(n - 1, ans);
+
+	int y = INT_MAX, z = INT_MAX;
+	if(n % 2 == 0) {
+		y = minStepsHelper(n/2, ans);
+	}
+
+	if(n % 3 == 0) {
+		z = minStepsHelper(n/3, ans);
+	}
+
+	int output = min(x, min(y, z)) + 1;
+
+	// Save output for future use
+	ans[n] = output;
+
+	return output;
+
+}
+
+int misSteps_2(int n) {
+	int *ans = new int[n+1];
+
+	for(int i = 0; i <= n; i++) {
+		ans[i] = -1;    //no reason for using -1. just that -1 would never be a valid ans.
+	}
+
+	return minStepsHelper(n, ans);
+}
+COMPLEXITY: O(n)
+
+*************************************
+USING DP:
+#include <cmath>
+int countStepsTo1(int n){
+	
+    int a[n+1];
+     
+    a[1]=0; a[2]=a[3]=1;
+   int b,c;
+    for(int i=4 ;i<n+1;i++)
+    {   
+        b=c=n;
+     
+       if(i%2==0) b=a[i/2];
+        if(i%3==0) c=a[i/3];
+     
+      a[i]=1+ min(a[i-1] ,min(b,c));
+    }
+return a[n];
+}
