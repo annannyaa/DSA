@@ -70,3 +70,4 @@ int main() {
     delete [] graph;
     return 0;
 }
+Time Complecity: O(V+E)
