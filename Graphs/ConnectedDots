@@ -84,7 +84,7 @@ bool hasCycle(char board[][MAXN],int n, int m) {
     return 0;
 }
 **************
-void dfs(vector<vector<char>> &board, vector<vector<bool>> &vi
+void dfs(vector<vector<char>> &board, vector<vector<bool>> &visited,int x,int y,int fromX,int fromY, char needColor, bool &foundCycle,int n,int m){
  if (x < 0 || x >= n || y < 0 || y >= m) {
     return;
  }
@@ -123,4 +123,25 @@ bool hasCycle(vector<vector<char>> &board, int n, int m)
         }
     }
     return foundCycle;
+}
+MAIN:
+#include <iostream>
+#include <vector>
+using namespace std;
+
+#include "solution.h"
+
+int main() {
+    int n, m;
+    cin >> n >> m;
+
+    vector<vector<char>> board(n, vector<char>(m));
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            cin >> board[i][j];
+        }
+    }
+
+    cout << (hasCycle(board, n, m) ? "true" : "false");
 }
