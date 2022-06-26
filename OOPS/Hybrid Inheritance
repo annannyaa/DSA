@@ -1,0 +1,105 @@
+//diamond problem
+class Vehicle {
+	private :
+		int maxSpeed;
+
+	protected :
+		int numTyres;
+
+	public :
+		string color;
+
+	/*
+		Vehicle() {
+		cout << "Vehicle's default constructor " << endl;
+	}*/
+
+	void print() {
+		cout << "Vehicle" << endl;
+	}
+
+
+	Vehicle(int z) {
+	cout << "Vehicle's Parametrized constructor " << z << endl;
+		maxSpeed = z;
+	}
+
+	~Vehicle() {
+		cout << "Vehicle's Destructor " << endl;
+	}
+
+};
+____________________________
+class Car : virtual public Vehicle {
+	public :
+		int numGears;
+
+		Car() : Vehicle(3){
+			cout << "Car's default constructor " << endl;
+		}
+
+
+		/*
+		Car(int x, int y) : Vehicle(x) {
+			cout << "Car's constructor " << endl;
+			numGears = y;
+		}*/
+
+		~Car() {
+			cout << "Car's Destructor " << endl;
+		}
+
+
+		
+
+		void print() {
+			cout << "NumTyres : " << numTyres << endl;
+			cout << "Color : " << color << endl;
+			cout << "Num gears : " << numGears << endl;
+			//		cout << "Max Speed : " << maxSpeed << endl;
+		}
+
+____________________________
+class Truck : virtual public Vehicle {
+	public :
+
+		Truck() : Vehicle(4) {
+			cout << "Truck's constructor " << endl;
+		}
+};
+
+____________________________
+class Bus : public Car, public Truck {
+	public :
+
+		Bus() : Vehicle(5) {
+			cout << "Bus's constructor " << endl;
+		}
+
+		/*
+		void print() {
+			cout << "BUs" << endl;
+		}*/
+};
+____________________________
+#include <iostream>
+using namespace std;
+#include "Vehicle.cpp"
+#include "Car.cpp"
+#include "Truck.cpp"
+#include "Bus.cpp"
+
+int main() {
+	Bus b;   //order of constructor: Vehicle, Car,Vehicle, Truck, Bus (w/0 using virual)
+
+	b.print();    //w/o virtual: bus derived from car and truck and they derived from vehicle- bus has two copies of vehicle. therefore multiple copies in base class of print()
+                //ways to remove it: add print() in bus, then it doesnt call to parent
+	//b.Car :: print();  //this also works
+  //virtual-no double cppies of Vehicle. Order of construc: Vehicle,Car, Truck, Bus- here bus directly calls vehicle. how dis happen- now, actual obj of vehicle are not there in car and truck- only pointers avail but bus has obj of car,truck, veh
+  //only derived classes can call parent construc. but by adding virutal child class can also call grandparent's construc
+  //hybrid / vortual inheritance
+  //print: 5 (which is passed in bus class- in truck and car we passed 3,4. but vehicle printed value of z=5 which means BUS is calling vehicle not car/truck.
+
+}
+
+
