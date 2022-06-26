@@ -1,0 +1,60 @@
+USE CASE:
+Emp-> eng, HR,others,mgr. isme jo calc-Slary func (in Employee class) should be a pure virtual func. Enforcing child classes to override the func
+class Vehicle {
+	public :
+		string color;
+
+		// Pure virtual fn
+	virtual void print() = 0;
+
+
+};
+
+___________________
+class Car : public Vehicle {
+	public :
+		int numGears;
+
+
+
+
+		
+		void print() {
+			cout << "Car" << endl;
+		}
+
+
+};
+___________________
+#include <iostream>
+using namespace std;
+#include "Vehicle.cpp"
+#include "Car.cpp"
+
+int main() {
+	Vehicle v;
+
+	Car c;
+
+	/*
+	Car c;
+
+	v.print();
+
+	c.print();
+
+
+	Vehicle *v1 = new Vehicle;
+
+	Vehicle *v2;
+	// v2 = &v;
+
+	v2 = &c;
+
+	v1 -> print();
+
+	v2 -> print();
+	*/
+
+}
+
