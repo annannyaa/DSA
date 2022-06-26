@@ -2,7 +2,7 @@ class Car : public Vehicle {
 	public :
 		int numGears;
 
-		Car(int x, int y) : Vehicle(x) {
+		Car(int x, int y) : Vehicle(x) {    //default constructor is implicity called but derived classes' parametrized constrc should be explicitly called
 			cout << "Car's constructor " << endl;
 			numGears = y;
 		}
