@@ -1,0 +1,114 @@
+class Teacher {
+	public : 
+		string name;
+		string age;
+
+		void print() {
+			cout << "Teacher" << endl;
+		}
+};
+__________________________
+class Student {
+	public :
+
+		string name;
+
+		void print() {
+			cout << "Student " << endl;
+		}
+};
+____________________________
+class TA : public Teacher, public Student {   //class who is mentioned first will have the constructor called first
+
+	public :
+		void print() {
+			cout << "TA " << endl;
+		}
+};
+_______________________________
+#include <iostream>
+using namespace std;
+#include "Student.cpp"
+#include "Teacher.cpp"
+#include "TA.cpp"
+
+
+int main() {
+	TA a;
+
+//	a.Student :: print();   //to resolve amiguity that which print should be called if it exists in multiple base classes
+
+	a.print();   //no error comes here beacuse TA class had a print func. if func present in derived class then we dont go to parent class. so no scope resolution req
+
+	
+	a.Teacher :: name = "abcd";
+
+}
+
+_________________________
+class Vehicle {
+	private :
+		int maxSpeed;
+
+	protected :
+		int numTyres;
+
+	public :
+		string color;
+
+		/*
+	Vehicle() {
+		cout << "Vehicle's default constructor " << endl;
+	}*/
+
+	Vehicle(int z) {
+		cout << "Vehicle's Parametrized constructor " << endl;
+		maxSpeed = z;
+	}
+
+	~Vehicle() {
+		cout << "Vehicle's Destructor " << endl;
+	}
+
+};
+________________________
+class Car : public Vehicle {
+	public :
+		int numGears;
+
+		Car(int x, int y) : Vehicle(x) {
+			cout << "Car's constructor " << endl;
+			numGears = y;
+		}
+
+		~Car() {
+			cout << "Car's Destructor " << endl;
+		}
+
+
+		void print() {
+			cout << "NumTyres : " << numTyres << endl;
+			cout << "Color : " << color << endl;
+			cout << "Num gears : " << numGears << endl;
+			//		cout << "Max Speed : " << maxSpeed << endl;
+		}
+
+
+
+};
+___________________
+class Truck : public Vehicle {
+
+};
+______________________
+#include <iostream>
+using namespace std;
+#include "Vehicle.cpp"
+#include "Car.cpp"
+#include "HondaCity.cpp"
+
+int main() {
+	
+}
+
+______________________
