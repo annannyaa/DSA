@@ -1,0 +1,116 @@
+class Vehicle {
+	public :
+		string color;
+
+	void print() {
+		cout << "Vehicle" << endl;
+	}
+
+
+};
+____
+class Car : public Vehicle {
+	public :
+		int numGears;
+
+
+		void print() {
+			cout << "Car" << endl;
+		}
+
+
+};
+_______
+#include <iostream>
+using namespace std;
+#include "Vehicle.cpp"
+#include "Car.cpp"
+
+int main() {
+	Vehicle v;
+
+	Car c;
+
+	v.print();
+
+	c.print();
+
+
+	Vehicle *v1 = new Vehicle;
+
+	Vehicle *v2;
+	// v2 = &v;
+
+	v2 = &c;   //base class pointer can point to child class obj vice versa not allowed. but when pointing like this, we can only access properties of parent class. child class prop NO.
+  
+
+	v1 -> print();
+
+	v2 -> print(); //prints vehicle. because its compile time poly. it doesnt see where its pointing to, we just see that it is a pointer of vehicle type so vehicle's print called
+
+
+}
+________________________________________________________________
+RUNTIME POLYMORPHISM:
+
+class Vehicle {
+	public :
+		string color;
+
+		/*
+	virtual void print() {               //virtual-take decision at runtime as to which print to be called
+		cout << "Vehicle" << endl;
+	}*/
+
+
+};
+
+_____________________
+class Car : public Vehicle {
+	public :
+		int numGears;
+
+
+
+		void print() {
+			cout << "Car" << endl;
+		}
+
+
+};
+__________
+
+#include <iostream>
+using namespace std;
+#include "Vehicle.cpp"
+#include "Car.cpp"
+
+int main() {
+	Vehicle v;
+
+	Car c;
+
+	v.print();
+
+	c.print();
+
+
+	Vehicle *v1 = new Vehicle;
+
+	Vehicle *v2;
+	// v2 = &v;
+
+	v2 = &c;
+
+	v1 -> print();
+
+	v2 -> print();   //car gets printed.
+  //what if car doesnt have print funv? then vehicle's print called
+  //USE CASE: an org. struct: 1HR, 3 Manager, 4 eng, 20 others. total 28. 
+  base class: emp. derived: HR,mgr,eng,others. each class has calcsal() func. 
+  Emp **e=new Emp[28]; in this pointers of every employee adress kept. 
+  call e[i]->calcsalary(); but calcsal() virtual which means that the type of obj which is kept at e[i] will determine which type of func (which class's) will get called. 
+
+}
+
+
