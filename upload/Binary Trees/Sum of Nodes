@@ -1,19 +1,15 @@
+/*
+ Time complexity: O(N)
+ Space complexity: O(H)
+ where N is the number of nodes in the input tree
+ and H is the height of the input tree
+*/
 int getSum(BinaryTreeNode<int>* root) {
-    // Write your code here
-    int sum=root->data;
-    if(root->left==NULL && root->right==NULL){
-        return sum;
-    }
-    if(root->left==NULL){
-        sum=sum+getSum(root->right);
-        return sum;
-    }
-    if(root->right==NULL){
-        sum=sum+getSum(root->left);
-        return sum;
-    }
-    
-sum=sum+getSum(root->left);
-sum=sum+getSum(root->right);
-    return sum;
+ if (root == NULL) {
+ return 0;
+ }
+ int leftSum = getSum(root->left);
+ int rightSum = getSum(root->right);
+
+ return leftSum + rightSum + root->data;
 }
