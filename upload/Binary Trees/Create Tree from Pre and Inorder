@@ -11,7 +11,7 @@ Sample Output :
 3 5 7 
 4 8 9 
 15 10 12
-
+// left_inorder_end - left_inorder_start = left_preorder_end - left_preorder_start
 
 //                                   inorder ,preorder,inorderstart,inorderend,preorderstart,preorderend
 BinaryTreeNode<int>* buildTreeHelper(int* in, int* pre, int inS, int inE, int preS, int preE) {
@@ -46,4 +46,41 @@ BinaryTreeNode<int>* buildTree(int *preorder, int preLength, int *inorder, int i
     
   
     return buildTreeHelper(inorder,preorder,0,inLength-1,0,preLength-1);
+}
+*****************************************
+/*
+ Time complexity: O(N^2)
+ Space complexity: O(H)
+ where N is the number of nodes in the input tree
+ and H is the height of the input tree
+*/
+BinaryTreeNode<int> *buildTreeHelper(int *preorder, int preStart, int preEnd, int *inorder, int *inStart, int inEnd)
+{
+    if (preStart > preEnd || inStart > inEnd)
+    {
+        return NULL;
+    }
+    int rootVal = preorder[preStart];
+    BinaryTreeNode<int> *root = new BinaryTreeNode<int>(rootVal);
+    // Find root element index from inorder array
+    int k = 0;
+    for (int i = inStart; i <= inEnd; i++)
+    {
+        if (rootVal == inorder[i])
+        {
+            k = i;
+            break;
+        }
+    }
+    root->left = buildTreeHelper(preorder, preStart + 1, preStart + (k - inStart), inorder, inStart, k - 1);
+    root->right = buildTreeHelper(preorder, preStart + (k - inStart) + 1, preEnd, inorder, k + 1, inEnd);
+    return root;
+}
+BinaryTreeNode<int> *buildTree(int *preorder, int preLength, int *inorder, int inLength)
+{
+    int preStart = 0;
+    int preEnd = preLength - 1;
+    int inStart = 0;
+    int inEnd = inLength - 1;
+ return buildTreeHelper(preorder, preStart, preEnd, inorder, inStart, inEnd
 }
