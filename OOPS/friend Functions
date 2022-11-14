@@ -18,13 +18,17 @@ class Truck {
 	public :
 		int z;
 
-		friend class Bus;
+		friend class Bus; // the whole class is friend of Bus class. every member func of Bus class is friend of Truck class and Bus's func can access all its private and protected prop
+					but vice versa not true, because bus hasn't declared truck to be its friend.
 
 		/*
-	friend void Bus :: print();
+	friend void Bus :: print();  /*if we would have declared bus below, compiler would give error because even though func exections starts at main, compiler reads code from top. 
+				      and doesn't check below*/
 
 	friend void test();
 	*/
+	/* lets say we had a function : void display(){cout<<this->x; OR cout<<x;} would give error because friend functions don't have access of this pointer*/
+	/*friend func can be put under any access modifiers, it won't matter. They have no effect on them.*/
 
 };
 
